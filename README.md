@@ -1,4 +1,15 @@
 # Blog-Poster
 
-### This app has an api that is run with `node app.js` and a front end that is run with `npm start` 
+## To run this app...
+- navigate to the api folder and run with `node app.js`
+- navigate to the frontend folder and run with `npm start`
+
+### Tech used
+- API:
+    - Node.js
+    - MongoDB
+    - Mongoose
+- Frontend:
+    - Parcel
+    
 
