@@ -35,13 +35,16 @@ function navHome() {
 
 
 function navPosts() {
+
+    //get request
     const postsButton = document.querySelector('.nav-list__posts');
     postsButton.addEventListener('click', function () {
         apiActions.getRequest('http://localhost:3000/posts', posts => {
             document.querySelector('#app').innerHTML = Posts(posts);
         });
-    })
+    });
 
+    //post request
     const app = document.querySelector('#app');
     app.addEventListener('click', function () {
         if (event.target.classList.contains('add-post__submit')) {
@@ -63,19 +66,20 @@ function navPosts() {
                 })
         }
 
-        app.addEventListener('click', function () {
-            if (event.target.classList.contains('delete-post__submit')) {
-                console.log('event triggered');
-                const postId = event.target.parentElement.querySelector('.delete-post__id').value;
-                console.log(postId);
-                apiActions.deleteRequest('http://localhost:3000/posts/5d7a7b3dadaa0518d8de144e', postId,
-                    (posts) => {
-                        document.querySelector('#app').innerHTML = Posts(posts);
-                    })
-            }
-        })
+    });
 
 
+    //delete request
+    app.addEventListener('click', function () {
+        if (event.target.classList.contains('delete-post__submit')) {
+            console.log('event triggered');
+            const postId = event.target.parentElement.querySelector('.delete-post__id').value;
+            console.log(postId);
+            apiActions.deleteRequest(`http://localhost:3000/posts/${postId}`,
+                (posts) => {
+                    document.querySelector('#app').innerHTML = Posts(posts);
+                })
+        }
     });
 
 
