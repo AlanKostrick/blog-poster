@@ -62,6 +62,20 @@ function navPosts() {
                     }, 3000);
                 })
         }
+
+        app.addEventListener('click', function () {
+            if (event.target.classList.contains('delete-post__submit')) {
+                console.log('event triggered');
+                const postId = event.target.parentElement.querySelector('.delete-post__id').value;
+                console.log(postId);
+                apiActions.deleteRequest('http://localhost:3000/posts/5d7a7b3dadaa0518d8de144e', postId,
+                    (posts) => {
+                        document.querySelector('#app').innerHTML = Posts(posts);
+                    })
+            }
+        })
+
+
     });
 
 

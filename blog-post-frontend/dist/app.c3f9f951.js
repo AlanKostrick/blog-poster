@@ -223,7 +223,8 @@ exports.default = Posts;
 
 function Posts(posts) {
   return "\n    <div>\n    ".concat(posts.map(function (post) {
-    return "\n            <section class='main-content__posts'>\n                <h3>".concat(post.title, "</h3>\n                <p>").concat(post.body, "</p>\n            </section>\n        ");
+    console.log(post._id);
+    return "\n            <section class='main-content__posts'>\n                <h3>".concat(post.title, "</h3>\n                <p>").concat(post.body, "</p>\n                <input class='delete-post__id' type='hidden' value=\"").concat(post._id, "\">\n                <button class='delete-post__submit'>&times</button>\n            </section>\n        ");
   }).join(''), "\n    </div>\n    \n    <section class='add-post'>\n        <input class='add-post__postTitle' type='text' placeholder='post title'>\n        <input class='add-post__postBody type='text' placeholder='post body'>\n        <button class='add-post__submit'>Submit</button>\n    </section>\n\n    ");
 }
 },{}],"js/components/Post.js":[function(require,module,exports) {
@@ -389,6 +390,18 @@ function navPosts() {
         }, 3000);
       });
     }
+
+    app.addEventListener('click', function () {
+      if (event.target.classList.contains('delete-post__submit')) {
+        console.log('event triggered');
+        var postId = event.target.parentElement.querySelector('.delete-post__id').value;
+        console.log(postId);
+
+        _apiActions.default.deleteRequest('http://localhost:3000/posts/5d7a7b3dadaa0518d8de144e', postId, function (posts) {
+          document.querySelector('#app').innerHTML = (0, _Posts.default)(posts);
+        });
+      }
+    });
   });
 }
 },{"./components/Header":"js/components/Header.js","./components/Home":"js/components/Home.js","./components/Posts":"js/components/Posts.js","./components/Post":"js/components/Post.js","./components/Footer":"js/components/Footer.js","./components/PostUpdate":"js/components/PostUpdate.js","./api/api-actions":"js/api/api-actions.js","../css/style.css":"css/style.css"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
@@ -419,7 +432,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62783" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64226" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
