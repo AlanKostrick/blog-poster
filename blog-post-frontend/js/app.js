@@ -50,7 +50,7 @@ function navPosts() {
 
             const postData = {
                 title: postTitle,
-                body: postBody
+                content: postBody
             }
 
             apiActions.postRequest('http://localhost:3000/posts', postData,

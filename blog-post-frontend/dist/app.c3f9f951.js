@@ -378,7 +378,7 @@ function navPosts() {
       var postBody = event.target.parentElement.querySelector('.add-post__postBody').value;
       var postData = {
         title: postTitle,
-        body: postBody
+        content: postBody
       };
 
       _apiActions.default.postRequest('http://localhost:3000/posts', postData, function (post) {
@@ -419,7 +419,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57955" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61920" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
