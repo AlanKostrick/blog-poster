@@ -29,10 +29,18 @@ router.put('/:postId', (req, res) => {
     })
 })
 
+// router.delete('/:postId', (req, res) => {
+//     Post.findByIdAndRemove(req.params.postId, {}, (error, data) => {
+//         if (error) return res.sendStatus(500).json(error)
+//         return res.json(data)
+//     })
+// })
+
+//if you want to return the remaining collection 
 router.delete('/:postId', (req, res) => {
     Post.findByIdAndRemove(req.params.postId, {}, (error, data) => {
-        if (error) return res.sendStatus(500).json(error)
-        return res.json(data)
+        if (error) res.sendStatus(500).json(error)
+        Post.find().then(response => res.json(response))
     })
 })
 

@@ -5,7 +5,9 @@ export default function Posts(posts) {
         return `
             <section class='main-content__posts'>
                 <h3>${post.title}</h3>
-                <p>${post.body}</p>
+                <p>${post.content}</p>
+                <input class='delete-post__id' type='hidden' value="${post._id}">
+                <button class='delete-post__submit'>&times</button>
             </section>
         `;
 

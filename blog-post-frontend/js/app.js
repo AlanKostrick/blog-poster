@@ -35,13 +35,16 @@ function navHome() {
 
 
 function navPosts() {
+
+    //get request
     const postsButton = document.querySelector('.nav-list__posts');
     postsButton.addEventListener('click', function () {
         apiActions.getRequest('http://localhost:3000/posts', posts => {
             document.querySelector('#app').innerHTML = Posts(posts);
         });
-    })
+    });
 
+    //post request
     const app = document.querySelector('#app');
     app.addEventListener('click', function () {
         if (event.target.classList.contains('add-post__submit')) {
@@ -60,6 +63,21 @@ function navPosts() {
                     setTimeout(function () {
                         document.querySelector('#app').innerHTML = Post(post);
                     }, 3000);
+                })
+        }
+
+    });
+
+
+    //delete request
+    app.addEventListener('click', function () {
+        if (event.target.classList.contains('delete-post__submit')) {
+            console.log('event triggered');
+            const postId = event.target.parentElement.querySelector('.delete-post__id').value;
+            console.log(postId);
+            apiActions.deleteRequest(`http://localhost:3000/posts/${postId}`,
+                (posts) => {
+                    document.querySelector('#app').innerHTML = Posts(posts);
                 })
         }
     });
