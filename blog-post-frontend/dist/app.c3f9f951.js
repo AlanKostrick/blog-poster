@@ -223,8 +223,8 @@ exports.default = Posts;
 
 function Posts(posts) {
   return "\n    <div>\n    ".concat(posts.map(function (post) {
-    return "\n            <section class='main-content__posts'>\n                <h3>".concat(post.title, "</h3>\n                <p>").concat(post.content, "</p>\n                <input class='delete-post__id' type='hidden' value=\"").concat(post._id, "\">\n                <button class='delete-post__submit'>&times</button>\n            </section>\n        ");
-  }).join(''), "\n    </div>\n    \n    <section class='add-post'>\n        <input class='add-post__postTitle' type='text' placeholder='post title'>\n        <input class='add-post__postBody type='text' placeholder='post body'>\n        <button class='add-post__submit'>Submit</button>\n    </section>\n\n    ");
+    return "\n            <section class='main-content__posts'>\n                <h3>".concat(post.title, "</h3>\n                <p>").concat(post.content, "</p>\n                <input class='delete-post__id' type='hidden' value=\"").concat(post._id, "\">\n                <button class='delete-post__submit'>&times</button>\n                <button class='edit-post__submit'>...</button>\n            </section>\n        ");
+  }).join(''), "\n    </div>\n    \n    <section class='add-post'>\n        <input class='add-post__postTitle' type='text' placeholder='post title'>\n        <input class='add-post__postBody type='text' placeholder='post content'>\n        <button class='add-post__submit'>Submit</button>\n    </section>\n\n    ");
 }
 },{}],"js/components/Post.js":[function(require,module,exports) {
 "use strict";
@@ -235,7 +235,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = Post;
 
 function Post(post) {
-  return "\n    <section>\n        <h3>".concat(post.title, "</h3>\n        <p>").concat(post.content, "</p>\n    </section>\n    ");
+  return "\n    <section class='main-content__posts'>\n        <h3>".concat(post.title, "</h3>\n        <p>").concat(post.content, "</p>\n    </section>\n        \n    <section class='update-post'>\n        <input class='update-post__postTitle' type='text' placeholder='edit title'>\n        <input class='update-post__postBody' type='text' placeholder='edit content'>\n        <button class='update-post__submit'>Edit</button>\n        <input class='update-post__id' type='hidden' value=\"").concat(post._id, "\">\n    </section>\n\n    ");
 }
 },{}],"js/components/Footer.js":[function(require,module,exports) {
 "use strict";
@@ -310,10 +310,27 @@ function deleteRequest(location, callback) {
   });
 }
 
+function updateRequest(location, requestBody, callback) {
+  fetch(location, {
+    method: 'PUT',
+    body: JSON.stringify(requestBody),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }).then(function (response) {
+    return response.json();
+  }).then(function (data) {
+    return callback(data);
+  }).catch(function (err) {
+    return console.log(err);
+  });
+}
+
 var _default = {
   getRequest: getRequest,
   postRequest: postRequest,
-  deleteRequest: deleteRequest
+  deleteRequest: deleteRequest,
+  updateRequest: updateRequest
 };
 exports.default = _default;
 },{}],"js/app.js":[function(require,module,exports) {
@@ -370,16 +387,18 @@ function navPosts() {
     _apiActions.default.getRequest('http://localhost:3000/posts', function (posts) {
       document.querySelector('#app').innerHTML = (0, _Posts.default)(posts);
     });
+
+    editPost();
   }); //post request
 
   var app = document.querySelector('#app');
   app.addEventListener('click', function () {
     if (event.target.classList.contains('add-post__submit')) {
       var postTitle = event.target.parentElement.querySelector('.add-post__postTitle').value;
-      var postBody = event.target.parentElement.querySelector('.add-post__postBody').value;
+      var postContent = event.target.parentElement.querySelector('.add-post__postBody').value;
       var postData = {
         title: postTitle,
-        content: postBody
+        content: postContent
       };
 
       _apiActions.default.postRequest('http://localhost:3000/posts', postData, function (post) {
@@ -394,12 +413,42 @@ function navPosts() {
 
   app.addEventListener('click', function () {
     if (event.target.classList.contains('delete-post__submit')) {
-      console.log('event triggered');
       var postId = event.target.parentElement.querySelector('.delete-post__id').value;
       console.log(postId);
 
       _apiActions.default.deleteRequest("http://localhost:3000/posts/".concat(postId), function (posts) {
         document.querySelector('#app').innerHTML = (0, _Posts.default)(posts);
+      });
+    }
+  }); //update request
+
+  app.addEventListener('click', function () {
+    if (event.target.classList.contains('update-post__submit')) {
+      var postId = event.target.parentElement.querySelector('.update-post__id').value;
+      var postTitle = event.target.parentElement.querySelector('.update-post__postTitle').value;
+      var postContent = event.target.parentElement.querySelector('.update-post__postBody').value;
+      var postData = {
+        title: postTitle,
+        content: postContent
+      };
+      console.log(postData);
+
+      _apiActions.default.updateRequest("http://localhost:3000/posts/".concat(postId), postData, function (post) {
+        document.querySelector('#app').innerHTML = (0, _Post.default)(post);
+      });
+    }
+  });
+}
+
+function editPost() {
+  var app = document.querySelector('#app');
+  app.addEventListener('click', function () {
+    if (event.target.classList.contains('edit-post__submit')) {
+      var postId = event.target.parentElement.querySelector('.delete-post__id').value;
+      console.log(postId);
+
+      _apiActions.default.getRequest("http://localhost:3000/posts/".concat(postId), function (post) {
+        document.querySelector('#app').innerHTML = (0, _Post.default)(post);
       });
     }
   });
@@ -432,7 +481,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53325" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57988" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

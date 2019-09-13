@@ -23,7 +23,7 @@ router.post('/', (req, res) => {
 })
 
 router.put('/:postId', (req, res) => {
-    Post.findByIdAndUpdate(req.params.postId, { $set: { title: req.body.title, body: req.body.body } }, (error, data) => {
+    Post.findByIdAndUpdate(req.params.postId, { $set: { title: req.body.title, content: req.body.content } }, (error, data) => {
         if (error) return res.sendStatus(500).json(error)
         return res.json(req.body)
     })
