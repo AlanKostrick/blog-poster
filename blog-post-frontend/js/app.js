@@ -42,6 +42,8 @@ function navPosts() {
         apiActions.getRequest('http://localhost:3000/posts', posts => {
             document.querySelector('#app').innerHTML = Posts(posts);
         });
+
+        editPost();
     });
 
     //post request
@@ -49,11 +51,11 @@ function navPosts() {
     app.addEventListener('click', function () {
         if (event.target.classList.contains('add-post__submit')) {
             const postTitle = event.target.parentElement.querySelector('.add-post__postTitle').value;
-            const postBody = event.target.parentElement.querySelector('.add-post__postBody').value;
+            const postContent = event.target.parentElement.querySelector('.add-post__postBody').value;
 
             const postData = {
                 title: postTitle,
-                content: postBody
+                content: postContent
             }
 
             apiActions.postRequest('http://localhost:3000/posts', postData,
@@ -72,7 +74,6 @@ function navPosts() {
     //delete request
     app.addEventListener('click', function () {
         if (event.target.classList.contains('delete-post__submit')) {
-            console.log('event triggered');
             const postId = event.target.parentElement.querySelector('.delete-post__id').value;
             console.log(postId);
             apiActions.deleteRequest(`http://localhost:3000/posts/${postId}`,
@@ -82,5 +83,39 @@ function navPosts() {
         }
     });
 
+    //update request
+    app.addEventListener('click', function () {
+        if (event.target.classList.contains('update-post__submit')) {
 
+            const postId = event.target.parentElement.querySelector('.update-post__id').value;
+
+            const postTitle = event.target.parentElement.querySelector('.update-post__postTitle').value;
+            const postContent = event.target.parentElement.querySelector('.update-post__postBody').value;
+
+            const postData = {
+                title: postTitle,
+                content: postContent
+            }
+            console.log(postData);
+
+            apiActions.updateRequest(`http://localhost:3000/posts/${postId}`, postData,
+                (post) => {
+                    document.querySelector('#app').innerHTML = Post(post);
+                })
+        }
+    });
+}
+
+function editPost() {
+    const app = document.querySelector('#app');
+    app.addEventListener('click', function () {
+        if (event.target.classList.contains('edit-post__submit')) {
+            const postId = event.target.parentElement.querySelector('.delete-post__id').value;
+            console.log(postId);
+            apiActions.getRequest(`http://localhost:3000/posts/${postId}`,
+                (post) => {
+                    document.querySelector('#app').innerHTML = Post(post);
+                })
+        }
+    });
 }

@@ -8,6 +8,7 @@ export default function Posts(posts) {
                 <p>${post.content}</p>
                 <input class='delete-post__id' type='hidden' value="${post._id}">
                 <button class='delete-post__submit'>&times</button>
+                <button class='edit-post__submit'>...</button>
             </section>
         `;
 
@@ -16,7 +17,7 @@ export default function Posts(posts) {
     
     <section class='add-post'>
         <input class='add-post__postTitle' type='text' placeholder='post title'>
-        <input class='add-post__postBody type='text' placeholder='post body'>
+        <input class='add-post__postBody type='text' placeholder='post content'>
         <button class='add-post__submit'>Submit</button>
     </section>
 
