@@ -1,7 +1,8 @@
 export default function Posts(posts) {
-    return `
+  return `
     <div>
-    ${posts.map(post => {
+    ${posts
+      .map(post => {
         return `
             <section class='main-content__posts'>
                 <h3>${post.title}</h3>
@@ -11,8 +12,8 @@ export default function Posts(posts) {
                 <button class='edit-post__submit'>...</button>
             </section>
         `;
-
-    }).join('')}
+      })
+      .join("")}
     </div>
     
     <section class='add-post'>
@@ -21,5 +22,5 @@ export default function Posts(posts) {
         <button class='add-post__submit'>Submit</button>
     </section>
 
-    `
+    `;
 }

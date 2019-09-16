@@ -1,5 +1,5 @@
 export default function Post(post) {
-    return `
+  return `
     <section class='main-content__posts'>
         <h3>${post.title}</h3>
         <p>${post.content}</p>
@@ -12,5 +12,5 @@ export default function Post(post) {
         <input class='update-post__id' type='hidden' value="${post._id}">
     </section>
 
-    `
+    `;
 }

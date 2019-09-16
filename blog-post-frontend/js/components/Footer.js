@@ -1,5 +1,5 @@
 export default function Footer() {
-    return `
+  return `
         <small>&copy wcci 2019</small>
-    `
+    `;
 }

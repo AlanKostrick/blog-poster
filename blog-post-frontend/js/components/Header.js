@@ -1,7 +1,7 @@
-import '../../css/style.css';
+import "../../css/style.css";
 
 export default function Header() {
-    return `
+  return `
         <nav class= 'nav'>
             <h1 class= 'nav-logo'>BlogPage</h1>
             <ul class= 'nav-list'>
@@ -9,5 +9,5 @@ export default function Header() {
                 <li class= 'nav-list__posts'>Posts</li>
             </ul>
         </nav>
-    `
+    `;
 }
