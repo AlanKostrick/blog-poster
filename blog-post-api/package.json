@@ -1,8 +1,8 @@
 {
-  "name": "hello-world-express",
+  "name": "blog-post-api",
   "version": "1.0.0",
   "description": "",
-  "main": "hello-world.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
