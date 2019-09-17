@@ -1,6 +1,3 @@
-// 20190901095402
-// https://raw.githubusercontent.com/manavm1990/savvy-coders-portfolio/master/.eslintrc.json
-
 {
   "env": {
     "browser": true,

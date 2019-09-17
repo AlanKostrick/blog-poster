@@ -1,8 +1,8 @@
 {
-  "name": "hello-world-express-frontend",
+  "name": "blog-post-frontend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "dependencies": {
     "eslint": "^6.4.0",
     "parcel-bundler": "^1.12.3"
